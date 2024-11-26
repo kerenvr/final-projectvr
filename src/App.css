@@ -1,42 +1,77 @@
 #root {
-  max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
+@media (min-width: 768px) {
+  body {
+    font-size: 16px; /* Consolidated */
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+@media (min-width: 1024px) {
+  body {
+    font-size: 18px; /* Larger font for desktop */
+  }
+
+  #root {
+    margin-left: 200px;
+    margin-right: 200px; /* Centering adjustments */
   }
 }
 
-.card {
-  padding: 2em;
+/* Front-end Style Guide */
+
+/* Layout */
+@media (max-width: 375px) {
+  /* Mobile styles */
 }
 
-.read-the-docs {
-  color: #888;
+@media (min-width: 376px) and (max-width: 1440px) {
+  /* Tablet styles */
+}
+
+@media (min-width: 1441px) {
+  /* Desktop styles */
+}
+
+/* Colors */
+:root {
+  --color-primary-orange: hsl(26, 100%, 55%);
+  --color-primary-pale-orange: hsl(25, 100%, 94%);
+  --color-primary-hover-orange: hsl(26, 100%, 66%);
+  
+  --color-neutral-very-dark-blue: hsl(220, 13%, 13%);
+  --color-neutral-dark-grayish-blue: hsl(219, 9%, 45%);
+  --color-neutral-grayish-blue: hsl(220, 14%, 75%);
+  --color-neutral-light-grayish-blue: hsl(223, 64%, 98%);
+  --color-neutral-white: hsl(0, 0%, 100%);
+  --color-neutral-black-opacity: rgba(0, 0, 0, 0.75); /* Lightbox background */
+}
+
+/* Typography */
+body {
+  font-family: 'Kumbh Sans', sans-serif;
+  font-size: 16px; /* Base font size */
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700; /* Heading weights */
+}
+
+p {
+  font-weight: 400; /* Paragraph weight */
+}
+
+/* Responsive content */
+@media (max-width: 375px) {
+  /* Adjustments for smaller screens */
+}
+
+@media (min-width: 376px) and (max-width: 1440px) {
+  /* Adjustments for medium screens */
+}
+
+@media (min-width: 1441px) {
+  /* Adjustments for large screens */
 }
