@@ -1,0 +1,23 @@
+.cart-container {
+    display: flex;
+    flex-direction: row;
+    background-color: var(--color-neutral-light-grayish-blue);
+    justify-content: space-between; /* Distributes space evenly between items */
+    align-items: center; /* Centers items vertically */
+    padding: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+    border-radius: 10px;
+}
+
+.amount{
+    font-weight: 700;
+}
+
+@media (min-width: 1024px) {
+    .cart-container {
+        flex: 0 0 40%; /* Set to 75% width */
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+}

@@ -1,0 +1,21 @@
+/* ProductPage.css */
+
+.product-page {
+}
+
+.product-slideshow {
+}
+
+.product-description {
+
+}
+
+@media (min-width: 1024px) {
+    .product-page {
+        padding: 90px;
+        display: flex;
+        gap: 80px;
+
+    }
+    
+}

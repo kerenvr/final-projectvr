@@ -1,0 +1,142 @@
+.navbar {
+  max-height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar__container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  margin: 30px;
+}
+
+.logo {
+  width: 160px
+}
+
+.hamburger {
+  width: 20px;
+}
+
+.hamburger-logo {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  min-width: 54%;
+}
+
+.cart-avatar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-width: 20%;
+}
+
+.avatar-image {
+  width: 30px;
+  height: auto;
+}
+
+.navbar__menu {
+  display: none;
+}
+
+
+.navbar__link {
+  color: rgb(130, 130, 130);
+  font-weight: 300;
+}
+
+.navbar__link:hover {
+  color: rgb(0, 0, 0);
+}
+
+.horizontal-line {
+  display: none;
+}
+
+.cart-count{
+  background-color: var(--color-primary-orange);
+  border-radius: 10px;
+  padding-left: 7px;
+  padding-right: 7px;
+  color: white;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+@media (min-width: 768px) {
+  .navbar__container {
+    margin: 0px;
+  }
+
+  .navbar__menu {
+      font-size: 16px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .avatar-image {
+      width: 50px;
+      border-radius: 200px;
+  }
+
+  .avatar-image:hover {
+    outline:2px solid var(--color-primary-orange);
+}
+
+  .hamburger {
+      display: none;
+  }
+
+  .hamburger-logo {
+      display: flex;
+      justify-content: start;
+  }
+
+  .logo {
+      width: 175px;
+      margin-right: 40px;
+  }
+
+  .navbar__menu {
+      display: flex;
+      gap: 40px;
+      font-size: 18px;
+  }
+
+  .cart-avatar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      min-width: 10%;
+  }
+
+  .cart {
+      width: 22px;
+  }
+
+  .cart-count{
+    background-color: var(--color-primary-orange);
+    border-radius: 10px;
+    padding-left: 7px;
+    padding-right: 7px;
+    color: white;
+    font-size: 10px;
+    font-weight: 600;
+    position: absolute;
+  }
+
+  .horizontal-line {
+    display: block;
+    width: 100%;         /* Full width */
+    height: 1px;        /* Thickness of the line */
+    background-color: rgb(230, 230, 230); /* Color of the line */
+  }
+
+}

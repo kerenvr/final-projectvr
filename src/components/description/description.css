@@ -1,0 +1,180 @@
+.container {
+    text-align: left;
+    margin: 30px;
+    max-width: 370px;
+    gap: 30px;  
+
+}
+
+.headings {
+    gap: 10px;
+}
+
+.headings, .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;  
+}
+
+.company {
+    color: rgb(90, 90, 90);
+    font-weight: bold;
+    font-size: 13px;
+    letter-spacing: 1.5px;
+}
+
+.title {
+    font-size: 30px;
+    line-height: 1.1;
+    font-weight: bold;
+}
+
+.description {
+    font-size: 18px;
+    font-weight: 500;
+    color: gray;
+    line-height: 1.8;
+    margin-top: 10px;
+}
+
+.price-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+}
+
+.price-discount {
+    display: flex;
+    gap: 20px;
+    justify-content: center; /* Centers horizontally */
+    align-items: center; 
+}
+
+.price {
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.discount {
+    background: #000;
+    color: white;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    border-radius: 6px;
+    font-weight: 700;
+}
+
+.previous-price {
+    text-decoration: line-through;
+    font-weight: 700;
+    color: rgb(90, 90, 90);
+
+}
+
+.add-cart-btn {
+    background-color: var(--color-primary-orange);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 18px;
+    border-radius: 7px;
+    font-weight: 700;
+    gap: 20px;
+
+}
+
+.shadow {
+    background-color: var(--color-primary-orange);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    border-radius: 7px;
+    filter: blur(20px); 
+    margin-top: -15px;
+}
+
+.cart-icon {
+    color: black;
+}
+
+.btn-shadow-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+@media (min-width: 1024px) {
+    .container {
+        padding-top: 50px;
+        padding-bottom: 50px;
+        margin: 30px;
+        height: 280px;
+        gap: 30px;
+
+    }
+
+    .headings {
+        gap: 10px;
+    }
+
+    .headings, .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    
+    .company {
+        font-size: 15px;
+        font-weight: 600;
+
+    }
+    
+    .title {
+        font-size: 50px;
+         
+   
+    }
+    
+    .description {
+        margin-top: 30px;
+        font-weight: 300;
+    }
+
+    .buttons {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .add-cart-btn {
+        background-color: var(--color-primary-orange);
+        flex: 0 0 60%; 
+        padding: 15px;
+    }
+
+    .add-cart-btn:hover {
+        background-color: var(--color-primary-hover-orange);
+    }
+
+    .shadow {
+        display: none;
+    }
+
+    .price-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: start; 
+    }
+    
+}

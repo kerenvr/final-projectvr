@@ -1,0 +1,14 @@
+
+.productImg {
+    width: 430px;  /* Set the desired width */
+    height: 315px; /* Set the desired height */
+    object-fit: cover; /* Ensure the image covers the area without distortion */
+}
+
+@media (min-width: 1024px) { 
+    .productImg {
+        height: 530px;
+        width: 540px;
+        border-radius: 15px;
+    }
+}
