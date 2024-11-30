@@ -1,0 +1,48 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 8px;
+}
+
+.subscriber,
+.subscribe-form {
+  background-color: #fff;
+  border-radius: 4px;
+  padding: 8px;
+  margin-bottom: 8px;
+}
+
+h2 {
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+p {
+  text-transform: capitalize;
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+nav li {
+  float: right;
+  display: block;
+  padding: 8px;
+}
+nav li a {
+  text-decoration: none;
+}
+
+.row {
+  padding: 10px 0 10px 0;
+}

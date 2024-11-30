@@ -1,0 +1,10 @@
+<h1>Sign-up for my Newsletter</h1>
+<form action="/api/newsletter-signup" method="POST">
+  <input type="hidden" name="_csrf" value="{{csrfToken}}" />
+  <label for="email">Email:</label>
+  <input type="email" name="email" id="email" required />
+  <button type="submit">Subscribe</button>
+</form>
+{{#if message}}
+  <p>{{message}}</p>
+{{/if}}

@@ -1,0 +1,27 @@
+{
+  "name": "javascript-starter",
+  "type": "module",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node lib/server.js",
+    "dev": "node --watch lib/server.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.46.1",
+    "@sendgrid/mail": "^8.1.4",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "csurf": "^1.10.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-handlebars": "^7.1.2",
+    "lowdb": "^7.0.1",
+    "multer": "^1.4.5-lts.1",
+    "nanoid": "^5.0.7"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/multer": "^1.4.12"
+  }
+}

@@ -1,0 +1,63 @@
+<h1>Add a Subscriber</h1>
+<form
+  name="subscribe-form"
+  class="subscribe-form"
+  method="POST"
+  target="_self"
+  action="/subscribers/create"
+  enctype="multipart/form-data"
+ >
+  <input type="hidden" name="_csrf" value="{{csrfToken}}" />
+
+  <div class="row">
+    <input type="text" name="fname" placeholder="First Name" required />
+    <input type="text" name="lname" placeholder="Last Name" required /></div>
+  <div class="row"><select name="sex" required>
+      <option value="male">Male</option>
+      <option value="female">Female</option>
+    </select>
+  </div>
+  <div class="row">
+    <label for="email">
+      Email
+    </label>
+    <input type="email" name="email" id="email" />
+  </div>
+  <div class="row">
+    <label for="birthday">
+      Birthday
+    </label>
+    <input type="date" name="birthday" id="birthday" /></div>
+  <div class="row">
+    <input type="radio" id="html" name="language" value="HTML" /><label
+      for="html"
+    >HTML</label>
+    <input type="radio" id="css" name="language" value="CSS" /><label
+      for="css"
+    >CSS</label><input type="radio" id="JS" name="language" value="JS" /><label
+      for="JS"
+    >JavaScript</label>
+  </div>
+  <div class="row">
+    <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" /><label
+      for="vehicle1"
+    > I have a bike</label><input
+      type="checkbox"
+      id="vehicle2"
+      name="vehicle2"
+      value="Car"
+    /><label for="vehicle2"> I have a car</label><input
+      type="checkbox"
+      id="vehicle3"
+      name="vehicle3"
+      value="Boat"
+    /><label for="vehicle3"> I have a boat</label>
+  </div>
+  <div class="row">
+    <label for="avatar">
+      Message
+    </label>
+    <input type="file" id="avatar" name="avatar" />
+  </div>
+  <button type="submit">Add</button>
+</form>

@@ -1,0 +1,22 @@
+<h1>Subscriptions</h1>
+<div>
+  {{#each subscribers}}
+    <div class="subscriber">
+      <h2>{{this.fname}} {{this.lname}}</h2>
+      <p>Sex: {{this.sex}}</p>
+
+      <form method="post" action="/subscribers/favorite/{{this.id}}">
+        {{#if this.isFavorite}}
+          <p>Favorite: Yes</p>
+        {{else}}
+          <p>Favorite: No</p>
+        {{/if}}
+        <button type="submit">Toggle Favorite</button>
+      </form>
+
+      <form method="post" action="/subscribers/delete/{{this.id}}">
+        <button type="submit">Delete</button>
+      </form>
+    </div>
+  {{/each}}
+</div>
