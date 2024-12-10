@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "start": "node lib/server.js",
-    "dev": "node --watch lib/server.js"
+    "dev": "node --watch lib/server.js",
+    "build": "echo 'No build step required'"
   },
   "dependencies": {
     "@sendgrid/mail": "^8.1.4",
