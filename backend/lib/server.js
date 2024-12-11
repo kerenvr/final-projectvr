@@ -1,7 +1,7 @@
 import express from "express"
 import { engine } from "express-handlebars"
 import router from "./route-handlers.js"
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 10000
 const app = express()
 
 // Handlebars setup
@@ -12,6 +12,3 @@ app.set("views", "views")
 // Middleware for route handlers
 app.use(router)
 
-app.listen(PORT, () => {
-  console.log(`Server started at http://localhost:${PORT}`)
-})

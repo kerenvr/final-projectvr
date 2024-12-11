@@ -13,7 +13,7 @@ function CartDropdown() {
       try {
         // Fetch cart items for the logged-in user
         const supaBaseData = await fetch(
-          "http://localhost:3000/api/cart/fetch-all-items",
+          "https://final-projectvr-2.onrender.com",
           {
             method: "POST",
             headers: {

@@ -12,7 +12,7 @@ function ProductPage({ updateCartCount }) {
     const fetchProduct = async () => {
       try {
         const supaBaseData = await fetch(
-          "http://localhost:3000/api/cart/fetch-products",
+          "https://final-projectvr-2.onrender.com",
           {
             method: "POST",
             headers: {
@@ -41,7 +41,7 @@ function ProductPage({ updateCartCount }) {
     const fetchDiscounts = async () => {
       try {
         const supaBaseData = await fetch(
-          "http://localhost:3000/api/cart/fetch-discounts",
+          "https://final-projectvr-2.onrender.com",
           {
             method: "POST",
             headers: {
