@@ -27,7 +27,7 @@ function CartCounter() {
     try {
       // Step 1: Check if the product already exists in the user's cart
       const supaBaseData = await fetch(
-        "https://final-projectvr-2.onrender.com/api/cart/fetch-single-item",
+        "https://final-projectvr-2.onrender.com",
         {
           method: "POST",
           headers: {
@@ -59,7 +59,7 @@ function CartCounter() {
         const updatedQuantity = existingCartItem.quantity + quantity
 
         const supaBaseData = await fetch(
-          "http://localhost:3000/api/cart/update-item-qty",
+          "https://final-projectvr-2.onrender.com",
           {
             method: "PATCH",
             headers: {
@@ -84,7 +84,7 @@ function CartCounter() {
         // Step 3: If the product doesn't exist in the cart, insert a new row
 
         const supaBaseData = await fetch(
-          "http://localhost:3000/api/cart/add-item",
+          "https://final-projectvr-2.onrender.com",
           {
             method: "PUT",
             headers: {
