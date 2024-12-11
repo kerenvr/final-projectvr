@@ -27,7 +27,7 @@ function CartCounter() {
     try {
       // Step 1: Check if the product already exists in the user's cart
       const supaBaseData = await fetch(
-        "http://localhost:3000/api/cart/fetch-single-item",
+        "https://final-projectvr-2.onrender.com/api/cart/fetch-single-item",
         {
           method: "POST",
           headers: {
