@@ -1,267 +1,300 @@
-import express from "express";
-import { engine } from "express-handlebars";
-import multer from "multer";
-import bodyParser from "body-parser";
-import cookieParser from "cookie-parser";
-import csrf from "csurf";
-import cors from "cors";
-import dotenv from "dotenv";
-import sgMail from "@sendgrid/mail";
-import supabase from "./supabaseClient.js"; // Adjust this path if needed
+import express from "express"
+import multer from "multer"
+import bodyParser from "body-parser"
+import cookieParser from "cookie-parser"
+import csrf from "csurf"
+import cors from "cors"
+import dotenv from "dotenv"
+import sgMail from "@sendgrid/mail"
+import supabase from "../supabaseClient.js"
+import { database } from "./persistent-database.js" // or use "./in-memory-database.js"
 
-const PORT = process.env.PORT || 10000;
-const app = express();
+const router = express.Router() // Create a router
 
-// Handlebars setup
-app.engine("hbs", engine({ extname: ".hbs" }));
-app.set("view engine", "hbs");
-app.set("views", "views");
+/**
+ * Mount Middleware
+ */
 
-// Middleware setup
-dotenv.config();
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-app.use(express.static("public"));
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.json());
-app.use(cookieParser());
-app.use(
+// Public files, form data, JSON, CSRF protection, and CORS
+router.use(express.static("public"))
+router.use(bodyParser.urlencoded({ extended: false }))
+router.use(express.json())
+router.use(cookieParser())
+const csrfProtection = csrf({ cookie: true })
+router.use(
   cors({
-    origin: true,
+    origin: true, // Allows any origin
     credentials: true,
   })
-);
-
-// CSRF Protection
-const csrfProtection = csrf({ cookie: true });
-app.use(csrfProtection);
+)
 
 // Configure for multi-part, form-based file uploads
-const upload = multer({ dest: "uploads/" });
+const upload = multer({ dest: "uploads/" })
 
-// Routes
+// configs for sendgrid and credentials
+dotenv.config()
+sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+
+/**
+ * Shopping Cart Route Definitions
+ */
 
 // Route to fetch all products
-app.post("/api/cart/fetch-products", async (req, res) => {
+router.post("/api/cart/fetch-products", async (req, res) => {
   try {
-    const limit = req.body.limit || 10;
-    const { data, error } = await supabase
-      .from("products")
-      .select("*")
-      .limit(limit);
+    const limit = req.body.limit || 10 // Default limit to 10 products
 
+    // Query Supabase
+    const { data, error } = await supabase
+      .from("products") // Access the 'products' table
+      .select("*")
+      .limit(limit)
+
+    // Handle Supabase errors
     if (error) {
       return res.status(500).json({
         error: "Failed to fetch products.",
         details: error.message,
-      });
+      })
     }
-    res.status(200).json({ data });
+
+    // Return the result
+    res.status(200).json({ data })
   } catch (err) {
+    // Handle unexpected errors
     res.status(500).json({
       error: "An unexpected error occurred.",
       details: err.message,
-    });
+    })
   }
-});
+})
 
 // Route to fetch all items in the cart
-app.post("/api/cart/fetch-all-items", async (req, res) => {
+router.post("/api/cart/fetch-all-items", async (req, res) => {
   try {
-    const { userId } = req.body;
+    const { userId } = req.body
 
+    // Validate required fields
     if (!userId) {
-      return res.status(400).json({ error: "Missing userId" });
+      return res.status(400).json({ error: "Missing userId" })
     }
 
+    // Query Supabase
     const { data, error } = await supabase
       .from("carts")
-      .select("product_id, quantity, products(name, price)")
-      .eq("user_id", userId);
+      .select("product_id, quantity, products(name, price)") // Join products to get name and price
+      .eq("user_id", userId)
 
+    // Handle Supabase errors
     if (error) {
       return res.status(500).json({
-        error: "Failed to fetch items from cart.",
+        error: "Failed to fetch any items from cart.",
         details: error.message,
-      });
+      })
     }
-    res.status(200).json({ existingCartItems: data });
+
+    // Return the result
+    res.status(200).json({ existingCartItems: data })
   } catch (err) {
-    res.status(500).json({
-      error: "An unexpected error occurred.",
-      details: err.message,
-    });
+    // Handle unexpected errors
+    res
+      .status(500)
+      .json({ error: "An unexpected error occurred.", details: err.message })
   }
-});
+})
 
 // Route to fetch a single item in the cart
-app.post("/api/cart/fetch-single-item", async (req, res) => {
+router.post("/api/cart/fetch-single-item", async (req, res) => {
   try {
-    const { userId, productId } = req.body;
+    const { userId, productId } = req.body
 
+    // Validate required fields
     if (!userId || !productId) {
-      return res.status(400).json({ error: "Missing userId or productId" });
+      return res
+        .status(400)
+        .json({ error: "Missing userId or productId in request body." })
     }
 
+    // Query Supabase
     const { data, error } = await supabase
       .from("carts")
       .select("id, quantity")
       .eq("user_id", userId)
       .eq("product_id", productId)
       .limit(1)
-      .single();
+      .single() // Directly fetch a single result for better clarity
 
+    // Handle Supabase errors
     if (error) {
       return res.status(500).json({
         error: "Failed to fetch item from cart.",
         details: error.message,
-      });
+      })
     }
-    res.status(200).json({ data });
+
+    // Return the result
+    res.status(200).json({ data })
   } catch (err) {
-    res.status(500).json({
-      error: "An unexpected error occurred.",
-      details: err.message,
-    });
+    // Handle unexpected errors
+    res
+      .status(500)
+      .json({ error: "An unexpected error occurred.", details: err.message })
   }
-});
+})
 
 // Route to update the quantity for a cart item
-app.patch("/api/cart/update-item-qty", async (req, res) => {
+router.patch("/api/cart/update-item-qty", async (req, res) => {
   try {
-    const { cartId, quantity } = req.body;
+    const { cartId, quantity } = req.body
 
+    // Validate required fields
     if (!cartId || !quantity) {
-      return res.status(400).json({ error: "Missing cartId or quantity" });
+      return res
+        .status(400)
+        .json({ error: "Missing cartId or quantity in request body." })
     }
 
+    // Update the cart item
     const { data, error } = await supabase
       .from("carts")
       .update({ quantity })
-      .eq("id", cartId);
+      .eq("id", cartId)
 
+    // Handle Supabase errors
     if (error) {
       return res.status(500).json({
         error: "Failed to update item in cart.",
         details: error.message,
-      });
+      })
     }
 
-    res.status(200).json(data);
+    // Return the updated item
+    res.status(200).json(data)
   } catch (err) {
-    res.status(500).json({
-      error: "An unexpected error occurred.",
-      details: err.message,
-    });
+    // Handle unexpected errors
+    res
+      .status(500)
+      .json({ error: "An unexpected error occurred.", details: err.message })
   }
-});
+})
 
 // Route to add an item to the cart
-app.put("/api/cart/add-item", async (req, res) => {
+router.put("/api/cart/add-item", async (req, res) => {
   try {
-    const { userId, productId, quantity } = req.body;
+    const { userId, productId, quantity } = req.body
 
+    // Validate required fields
     if (!userId || !productId || !quantity) {
       return res.status(400).json({
-        error: "Missing userId, productId, or quantity.",
-      });
+        error: "Missing userId, productId, or quantity in request body.",
+      })
     }
 
+    // Query Supabase
     const { data: existingCartItems, error: fetchError } = await supabase
       .from("carts")
       .select("id, quantity")
       .eq("user_id", userId)
       .eq("product_id", productId)
-      .limit(1);
+      .limit(1) // Ensure at most one row is returned
 
+    // Handle Supabase errors
     if (fetchError) {
       return res.status(500).json({
         error: "Failed to fetch item from cart.",
         details: fetchError.message,
-      });
+      })
     }
 
+    // If multiple rows are returned, handle the situation gracefully
     if (existingCartItems.length > 1) {
       return res.status(500).json({
         error:
           "Unexpected multiple rows returned for the same user and product.",
-      });
+      })
     }
 
     if (existingCartItems.length === 1) {
-      const existingCartItem = existingCartItems[0];
-      const updatedQuantity = existingCartItem.quantity + quantity;
+      // If the product already exists, update the quantity
+      const existingCartItem = existingCartItems[0]
+      const updatedQuantity = existingCartItem.quantity + quantity
 
       const { data, error } = await supabase
         .from("carts")
         .update({ quantity: updatedQuantity })
-        .eq("id", existingCartItem.id);
+        .eq("id", existingCartItem.id)
 
+      // Handle Supabase errors
       if (error) {
         return res.status(500).json({
           error: "Failed to update item in cart.",
           details: error.message,
-        });
+        })
       }
 
-      res.status(200).json(data);
+      // Return the updated item
+      res.status(200).json(data)
     } else {
+      // If the product doesn't exist in the cart, insert a new row
       const { data, error } = await supabase
         .from("carts")
-        .insert([{ user_id: userId, product_id: productId, quantity }]);
+        .insert([{ user_id: userId, product_id: productId, quantity }])
 
+      // Handle Supabase errors
       if (error) {
         return res.status(500).json({
           error: "Failed to add item to cart.",
           details: error.message,
-        });
+        })
       }
-
-      res.status(200).json(data);
     }
   } catch (err) {
-    res.status(500).json({
-      error: "An unexpected error occurred.",
-      details: err.message,
-    });
+    // Handle unexpected errors
+    res
+      .status(500)
+      .json({ error: "An unexpected error occurred.", details: err.message })
   }
-});
+})
 
 // Route to fetch a discount
-app.post("/api/cart/fetch-discounts", async (req, res) => {
+router.post("/api/cart/fetch-discounts", async (req, res) => {
+  const limit = req.body.limit || 1 // Default limit to 1
   try {
-    const limit = req.body.limit || 1;
+    // Query Supabase
     const { data, error } = await supabase
-      .from("discounts")
+      .from("discounts") // Access the 'discounts' table
       .select("*")
-      .limit(limit);
+      .limit(limit) // Assuming you are fetching one discount for simplicity
 
+    // Handle Supabase errors
     if (error) {
       return res.status(500).json({
         error: "Failed to fetch discount.",
         details: error.message,
-      });
+      })
     }
 
-    res.status(200).json({ data });
+    // Return the result
+    res.status(200).json({ data })
   } catch (err) {
+    // Handle unexpected errors
     res.status(500).json({
       error: "An unexpected error occurred.",
       details: err.message,
-    });
+    })
   }
-});
+})
 
-// CSRF Token Route
-app.get("/csrf-token", csrfProtection, (req, res) => {
-  res.json({ csrfToken: req.csrfToken() });
-});
+/**
+ * SendGrid API Route Definitions
+ */
 
-// Root route for testing
-app.get("/", (req, res) => {
-  res.send("Welcome to the Express Server!");
-});
+// Route for CSRF token (when needed)
+router.get("/csrf-token", csrfProtection, (req, res) => {
+  res.json({ csrfToken: req.csrfToken() })
+})
 
-// Start the server
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+// Route for API newsletter signup
+
+
+export default router
