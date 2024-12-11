@@ -18,7 +18,7 @@ function Navbar() {
       try {
         // Fetch the total quantity of items in the cart for the current user
         const supaBaseData = await fetch(
-          "https://final-projectvr-2.onrender.com",
+          "https://final-projectvr-2.onrender.com/api/cart/fetch-all-items",
           {
             method: "POST",
             headers: {
