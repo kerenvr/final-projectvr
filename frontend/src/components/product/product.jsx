@@ -41,7 +41,7 @@ function ProductPage({ updateCartCount }) {
     const fetchDiscounts = async () => {
       try {
         const supaBaseData = await fetch(
-          "http://localhost:3000/api/cart/fetch-discounts",
+          "https://final-projectvr-2.onrender.com/api/cart/fetch-discounts",
           {
             method: "POST",
             headers: {
